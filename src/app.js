@@ -2,13 +2,17 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const https = require("https");
-const { request } = require("http");
-
-app.use(express.static("public"))
+//const { request } = require("http");
+const path = require("path");
+var rpath;
+app.use(express.static(path.join(__dirname,"../")+"public"))
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get("/",(req,res)=>{
-    res.sendFile(__dirname+"/signup.html")
+    //console.log(__dirname);
+    //res.send("success");
+    rpath = path.join(__dirname,"../");
+    res.sendFile(rpath+"dist\\signup.html");
 })
 
 app.post("/",(req,res)=>{
@@ -35,13 +39,13 @@ app.post("/",(req,res)=>{
     const url = "https://us14.api.mailchimp.com/3.0/lists/899fd51438";
     const options={
         method: "POST",
-        auth: "ronak:8d1c6b8b201a69bf63fa68f185ccb71d-us14"
+        auth: "ronak:240c7c6894d892cc071674911a628241-us14"
     }
     const request = https.request(url,options,(response)=>{
         if(response.statusCode === 200){
-            res.sendFile(__dirname+"/sucess.html");
+           res.sendFile(rpath+"dist/sucess.html");
         } else{
-            res.sendFile(__dirname+"/failure.html");
+            res.sendFile(rpath+"dist/failure.html");
         }
         response.on("data",(data)=>{
             console.log(JSON.parse(data));
@@ -56,10 +60,12 @@ app.post("/failure",(req,res)=>{
     res.redirect("/");
 });
 
-app.listen(process.env.PORT  || 3000,()=>{
+app.listen(3000,(err)=>{
+    if(err)
+      console.log(err);
     console.log("Server is up and running");
 })
 
 
-//8d1c6b8b201a69bf63fa68f185ccb71d-us14  apikey
+//240c7c6894d892cc071674911a628241-us14  apikey
 //899fd51438.                            listId
