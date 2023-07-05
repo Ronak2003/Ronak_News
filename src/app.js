@@ -39,7 +39,7 @@ app.post("/",(req,res)=>{
     const url = "https://us14.api.mailchimp.com/3.0/lists/899fd51438";
     const options={
         method: "POST",
-        auth: "ronak:240c7c6894d892cc071674911a628241-us14"
+        auth: "ronak:d109d173ba24329795655669698b05eb-us14"
     }
     const request = https.request(url,options,(response)=>{
         if(response.statusCode === 200){
@@ -67,5 +67,5 @@ app.listen(3000,(err)=>{
 })
 
 
-//240c7c6894d892cc071674911a628241-us14  apikey
+//d109d173ba24329795655669698b05eb-us14  apikey
 //899fd51438.                            listId
